@@ -1,5 +1,8 @@
-import { Box, Button, Divider, Flex, Heading, HStack, SimpleGrid, Stack, VStack } from "@chakra-ui/react";
-import { BasicInput } from "../../../components/Form/Input";
+import { Box, Button, Divider, Flex, Heading, HStack, SimpleGrid, VStack } from "@chakra-ui/react";
+import dynamic from "next/dynamic";
+const BasicInput = dynamic(import("../../../components/Form/Input"), {
+  ssr: false
+})
 import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
 
@@ -21,7 +24,7 @@ export default function CreateUser() {
           flex={1}
           borderRadius={8}
           bg="gray.800"
-          p={8}
+          p={["6", "8"]}
         >
           <Heading
             size="lg"
@@ -33,19 +36,21 @@ export default function CreateUser() {
           <Divider my={6} borderColor="gray.700" />
 
           <VStack
-            spacing={8}
+            spacing={["6", "8"]}
           >
             <SimpleGrid
               minChildWidth="240px"
-              spacing={8}
+              spacing={["6", "8"]}
               w="100%"
             >
               <BasicInput
+                id="name"
                 name="name"
                 label="Nome completo"
               />
 
               <BasicInput
+                id="email"
                 name="email"
                 label="E-mail"
                 type="email"
@@ -54,10 +59,11 @@ export default function CreateUser() {
 
             <SimpleGrid
               minChildWidth="240px"
-              spacing={8}
+              spacing={["6", "8"]}
               w="100%"
             >
               <BasicInput
+                id="password"
                 name="password"
                 label="Senha"
                 type="password"
@@ -65,6 +71,7 @@ export default function CreateUser() {
 
               <BasicInput
                 name="password_confirmation"
+                id="password_confirmation"
                 label="Confirme a senha"
                 type="password"
               />
@@ -76,7 +83,7 @@ export default function CreateUser() {
             justify="flex-end"
           >
             <HStack
-              spacing={4}
+              spacing={["6", "8"]}
             >
               <Button
                 colorScheme="whiteAlpha"

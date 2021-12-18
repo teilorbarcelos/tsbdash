@@ -1,5 +1,8 @@
 import { Button, Flex, FormControl, Stack } from "@chakra-ui/react"
-import { BasicInput } from "../components/Form/Input"
+import dynamic from "next/dynamic"
+const BasicInput = dynamic(import("../components/Form/Input"), {
+  ssr: false
+})
 
 export default function Home() {
   return (
