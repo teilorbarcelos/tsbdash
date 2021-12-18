@@ -68,7 +68,6 @@ export default function Sidebar() {
           <DrawerContent
             bg="gray.800"
             p={4}
-            onClick={onClose}
           >
             <DrawerCloseButton
               onClick={onClose}
