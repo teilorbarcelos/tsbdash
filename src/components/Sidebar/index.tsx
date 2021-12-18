@@ -1,13 +1,30 @@
-import { Box, Stack } from "@chakra-ui/react"
-import { RiContactsLine, RiDashboardLine, RiGitMergeLine, RiInputMethodLine } from "react-icons/ri"
-import { NavSection, NavSectionProps } from "./NavSection"
+import {
+  Box,
+  Drawer,
+  DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerHeader,
+  DrawerOverlay,
+  useBreakpointValue
+} from "@chakra-ui/react"
+import {
+  RiContactsLine,
+  RiDashboardLine,
+  RiGitMergeLine,
+  RiInputMethodLine
+} from "react-icons/ri"
+import { useSidebarDrawer } from "../../contexts/SidebarDrawerContext"
+import { SidebarNav } from "../SidebarNav"
 
-interface SidebarProps {
-  navSections?: NavSectionProps[]
-}
+export default function Sidebar() {
+  const { isOpen, onClose } = useSidebarDrawer()
+  const isDrawerSidebar = useBreakpointValue({
+    base: true,
+    lg: false
+  })
 
-export default function Sidebar({
-  navSections = [
+  const navSections = [
     {
       title: "Geral",
       navLinks: [
@@ -39,30 +56,46 @@ export default function Sidebar({
       ]
     },
   ]
-}: SidebarProps) {
+
+  if (isDrawerSidebar) {
+    return (
+      <Drawer
+        isOpen={isOpen}
+        placement="left"
+        onClose={() => { }}
+      >
+        <DrawerOverlay>
+          <DrawerContent
+            bg="gray.800"
+            p={4}
+            onClick={onClose}
+          >
+            <DrawerCloseButton
+              onClick={onClose}
+              mt={6}
+            />
+            <DrawerHeader>Navegação</DrawerHeader>
+
+            <DrawerBody>
+              <SidebarNav
+                navSections={navSections}
+              />
+            </DrawerBody>
+          </DrawerContent>
+        </DrawerOverlay>
+      </Drawer>
+    )
+  }
+
   return (
     <Box
       as="aside"
       w={64}
       mr={8}
     >
-      <Stack
-        spacing={12}
-        align="flex-start"
-      >
-        {
-          navSections.map((navSection, index) => {
-            return (
-              <Box key={index}>
-                <NavSection
-                  title={navSection.title}
-                  navLinks={navSection.navLinks}
-                />
-              </Box>
-            )
-          })
-        }
-      </Stack>
+      <SidebarNav
+        navSections={navSections}
+      />
     </Box>
   )
 }
