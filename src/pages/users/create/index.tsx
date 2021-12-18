@@ -1,5 +1,6 @@
 import { Box, Button, Divider, Flex, Heading, HStack, SimpleGrid, VStack } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 const BasicInput = dynamic(import("../../../components/Form/Input"), {
   ssr: false
 })
@@ -85,11 +86,14 @@ export default function CreateUser() {
             <HStack
               spacing={["6", "8"]}
             >
-              <Button
-                colorScheme="whiteAlpha"
-              >
-                Cancelar
-              </Button>
+              <Link href="/users" passHref>
+                <Button
+                  as="a"
+                  colorScheme="whiteAlpha"
+                >
+                  Cancelar
+                </Button>
+              </Link>
 
               <Button
                 colorScheme="pink"
