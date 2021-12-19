@@ -1,10 +1,31 @@
 import { Button, Flex, Stack } from "@chakra-ui/react"
-import dynamic from "next/dynamic"
-const BasicInput = dynamic(import("../components/Form/Input"), {
-  ssr: false
+import { SubmitHandler, useForm } from "react-hook-form"
+import * as yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { BasicInput } from "../components/Form/Input"
+
+interface SignInFormData {
+  email: string
+  password: string
+}
+
+const signInFormSchema = yup.object().shape({
+  email: yup.string().required('E-mail obrigatório').email('E-mail inválido'),
+  password: yup.string().required('Informe a senha')
 })
 
-export default function Home() {
+export default function SignIn() {
+  const { register, handleSubmit, formState } = useForm({
+    resolver: yupResolver(signInFormSchema)
+  })
+
+  const { errors } = formState
+
+  const handleSignIn: SubmitHandler<SignInFormData> = async (data, event) => {
+    await new Promise(resolve => setTimeout(resolve, 2000))
+    console.log('Loga')
+  }
+
   return (
     <Flex
       w="100vw"
@@ -14,6 +35,7 @@ export default function Home() {
     >
       <Flex
         as="form"
+        onSubmit={handleSubmit(handleSignIn)}
         w="100%"
         maxW={360}
         bg="gray.800"
@@ -27,12 +49,16 @@ export default function Home() {
             name="email"
             type="email"
             label="E-mail"
+            error={errors.email}
+            {...register('email')}
           />
 
           <BasicInput
             name="password"
             type="password"
             label="Senha"
+            error={errors.password}
+            {...register('password')}
           />
         </Stack>
         <Button
@@ -40,6 +66,7 @@ export default function Home() {
           mt={6}
           colorScheme="pink"
           size="lg"
+          isLoading={formState.isSubmitting}
         >Entrar</Button>
       </Flex>
     </Flex >

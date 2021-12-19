@@ -10,7 +10,7 @@ export function ActiveLink({ children, ...rest }: ActiveLinkProps) {
   const { asPath } = useRouter()
   let isActive = false
 
-  if (asPath.includes(String(rest.href)) && asPath !== '/') {
+  if (asPath.startsWith(String(rest.href)) && asPath !== '/') {
     isActive = true
   }
 
