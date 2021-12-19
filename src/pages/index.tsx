@@ -1,8 +1,8 @@
 import { Button, Flex, Stack } from "@chakra-ui/react"
 import { SubmitHandler, useForm } from "react-hook-form"
-import { BasicInput } from "../components/Form/Input"
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { BasicInput } from "../components/Form/Input"
 
 interface SignInFormData {
   email: string
@@ -22,6 +22,8 @@ export default function SignIn() {
   const { errors } = formState
 
   const handleSignIn: SubmitHandler<SignInFormData> = async (data, event) => {
+    await new Promise(resolve => setTimeout(resolve, 2000))
+    console.log('Loga')
   }
 
   return (
