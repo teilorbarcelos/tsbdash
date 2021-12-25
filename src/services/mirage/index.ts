@@ -30,7 +30,7 @@ export function makeServer() {
     },
 
     seeds(server) {
-      return server.createList('user', 125)
+      return server.createList('user', 115)
     },
 
     routes() {
@@ -51,7 +51,7 @@ export function makeServer() {
 
         return new Response(
           200,
-          { 'x-total-count': String(total) },
+          { "x-total-count": String(total) },
           { users }
         )
       })

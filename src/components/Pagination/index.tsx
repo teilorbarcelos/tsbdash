@@ -42,7 +42,7 @@ export function Pagination({
       align="center"
     >
       <Box>
-        <strong>0</strong> - <strong>10</strong> de <strong>100</strong>
+        <strong>0</strong> - <strong>10</strong> de <strong>115</strong>
       </Box>
       <Stack
         direction="row"
@@ -51,7 +51,10 @@ export function Pagination({
         {
           currentPage > (1 + nextsCount) &&
           <>
-            <PaginationItem page={1} />
+            <PaginationItem
+              onPageChange={onPageChange}
+              page={1}
+            />
 
             {
               currentPage > (2 + nextsCount) &&
@@ -67,16 +70,28 @@ export function Pagination({
         {
           previousPages.length > 0 &&
           previousPages.map(page => {
-            return <PaginationItem key={page} page={page} />
+            return <PaginationItem
+              onPageChange={onPageChange}
+              key={page}
+              page={page}
+            />
           })
         }
 
-        <PaginationItem page={currentPage} isCurrent />
+        <PaginationItem
+          onPageChange={onPageChange}
+          page={currentPage}
+          isCurrent
+        />
 
         {
           nextPages.length > 0 &&
           nextPages.map(page => {
-            return <PaginationItem key={page} page={page} />
+            return <PaginationItem
+              onPageChange={onPageChange}
+              key={page}
+              page={page}
+            />
           })
         }
 
@@ -91,7 +106,10 @@ export function Pagination({
                 textAlign="center"
               >...</Text>
             }
-            <PaginationItem page={lastPage} />
+            <PaginationItem
+              onPageChange={onPageChange}
+              page={lastPage}
+            />
           </>
         }
       </Stack>
