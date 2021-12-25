@@ -20,38 +20,10 @@ import Sidebar from "../../components/Sidebar"
 import { RiAddLine, RiPencilLine } from "react-icons/ri"
 import { Pagination } from "../../components/Pagination"
 import Link from "next/link"
-import { useQuery } from "react-query"
-import { api } from "../../services/api"
-
-interface User {
-  users: {
-    name: string
-    email: string
-    createdAt: string
-  }[]
-}
+import { useUsers } from '../../services/hooks/useUsers'
 
 export default function UserList() {
-  const { data, isLoading, isRefetching, error } = useQuery('users', async () => {
-    const { data } = await api.get<User>('/users')
-
-    const users = data.users.map(user => {
-      return {
-        name: user.name,
-        email: user.email,
-        createdAt: new Date(user.createdAt).toLocaleDateString('pt-BR', {
-          day: '2-digit',
-          month: 'long',
-          year: 'numeric'
-        })
-      }
-    })
-
-    return users
-  },
-    {
-      staleTime: 1000 * 5 // 5seconds
-    })
+  const { data, isLoading, isRefetching, error } = useUsers()
 
   const isWideVersion = useBreakpointValue({
     base: false,
@@ -148,7 +120,7 @@ export default function UserList() {
 
                       {
                         data.map(user => (
-                          <Tr key={user.email}>
+                          <Tr key={user.id}>
                             <Td px={["4", "4", "6"]}>
                               <Checkbox colorScheme="pink" />
                             </Td>
