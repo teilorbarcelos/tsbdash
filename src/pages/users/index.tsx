@@ -21,6 +21,7 @@ import { RiAddLine, RiPencilLine } from "react-icons/ri"
 import { Pagination } from "../../components/Pagination"
 import Link from "next/link"
 import { useQuery } from "react-query"
+import { api } from "../../services/api"
 
 interface User {
   users: {
@@ -32,9 +33,7 @@ interface User {
 
 export default function UserList() {
   const { data, isLoading, isRefetching, error } = useQuery('users', async () => {
-    const response = await fetch('http://localhost:3000/api/users')
-
-    const data = await response.json() as User
+    const { data } = await api.get<User>('/users')
 
     const users = data.users.map(user => {
       return {
