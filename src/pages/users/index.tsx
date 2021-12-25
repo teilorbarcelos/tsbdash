@@ -31,7 +31,7 @@ interface User {
 }
 
 export default function UserList() {
-  const { data, isLoading, error } = useQuery('users', async () => {
+  const { data, isLoading, isRefetching, error } = useQuery('users', async () => {
     const response = await fetch('http://localhost:3000/api/users')
 
     const data = await response.json() as User
@@ -87,7 +87,13 @@ export default function UserList() {
               size="lg"
               fontWeight="normal"
             >
-              User List
+              Usuários
+
+              {
+                !isLoading && isRefetching &&
+                <Spinner size="sm" color="gray.500" ml={4} />
+              }
+
             </Heading>
 
             <Link href="/users/create" passHref>
